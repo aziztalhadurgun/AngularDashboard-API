@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Advantage.API.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20190824100701_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20190827112120_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,7 @@ namespace Advantage.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Custumers");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Advantage.API.Models.Order", b =>

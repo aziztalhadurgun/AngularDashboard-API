@@ -32,7 +32,7 @@ namespace Advantage.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Custumers");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Advantage.API.Models.Order", b =>

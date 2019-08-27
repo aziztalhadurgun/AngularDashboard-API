@@ -19,10 +19,10 @@ namespace Advantage.API
             if (names.Count >= maxNames)
             {
                 throw new System.InvalidOperationException("Maximum number of unique names exceeded!");
-            } 
+            }
             var prefix = GetRandom(bizPrefix);
             var suffix = GetRandom(bizSuffix);
-            var bizName  = prefix + suffix;
+            var bizName = prefix + suffix;
 
             if (names.Contains(bizName))
             {
@@ -44,16 +44,16 @@ namespace Advantage.API
 
         internal static decimal GetRandomOrderTotal()
         {
-            return _rand.Next(100,5000);
+            return _rand.Next(100, 5000);
         }
 
         internal static DateTime GetRandomOrderPlaced()
         {
             var end = DateTime.Now;
-            var start = end.AddDays(-50);
+            var start = end.AddDays(-90);
 
             TimeSpan possibleSpan = end - start;
-            TimeSpan newSpan  = new TimeSpan(0, _rand.Next(0, (int)possibleSpan.TotalMinutes),0);
+            TimeSpan newSpan = new TimeSpan(0, _rand.Next(0, (int)possibleSpan.TotalMinutes), 0);
 
             return start + newSpan;
         }
@@ -69,7 +69,7 @@ namespace Advantage.API
                 return null;
             }
 
-            return orderPlaced.AddDays(_rand.Next(7,14));
+            return orderPlaced.AddDays(_rand.Next(7, 14));
         }
 
         private static readonly List<string> trState = new List<string>()
@@ -81,9 +81,7 @@ namespace Advantage.API
             "İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri",
             "Kilis","Kocaeli","Konya","Kütahya","Kırklareli","Kırıkkale","Kırşehir","Malatya",
             "Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize",
-            "Sakarya","Samsun","Siirt","Sinop","Sivas","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak",
-            "Van","Yalova","Yozgat","Zonguldak","Çanakkale","Çankırı","Çorum","Isparta","Iğdır",
-            "Şanlıurfa","Şırnak"
+            "Sakarya","Samsun","Siirt","Sinop","Sivas","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak","Çanakkale","Çankırı","Çorum","Isparta","Iğdır","Şanlıurfa","Şırnak"
         };
 
         private static readonly List<string> bizPrefix = new List<string>()

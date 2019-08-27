@@ -16,22 +16,22 @@ namespace Advantage.API
 
         public void SeedData(int nCustomers, int nOrders)
         {
-            if (!_ctx.Custumers.Any())
+            if (!_ctx.Customers.Any())
             {
                 SeedCustomers(nCustomers);
-
+                _ctx.SaveChanges();
             }
             if (!_ctx.Orders.Any())
             {
                 SeedOrders(nOrders);
-
+                _ctx.SaveChanges();
             }
             if (!_ctx.Servers.Any())
             {
-                SeedServers(nCustomers);
-
+                SeedServers();
+                _ctx.SaveChanges();
             }
-            _ctx.SaveChanges();
+            
         }
 
         private void SeedCustomers(int n)
@@ -40,7 +40,7 @@ namespace Advantage.API
 
             foreach (var customer in customers)
             {
-                _ctx.Custumers.Add(customer);
+                _ctx.Customers.Add(customer);
             }
         }
 
@@ -54,12 +54,22 @@ namespace Advantage.API
             }
         }
 
+        private void SeedServers()
+        {
+            List<Server> servers = BuildServerList();
+
+            foreach (var server in servers)
+            {
+                _ctx.Servers.Add(server);
+            }
+        }
+
         private List<Customer> BuildCustomerList(int nCustomers)
         {
             var customers = new List<Customer>();
             var names = new List<string>();
 
-            for (var i = 0; i <= nCustomers; i++)
+            for (var i = 0; i < nCustomers; i++)
             {
                 var name = Helpers.MakeUniqueCustomerName(names);
                 names.Add(name);
@@ -82,13 +92,15 @@ namespace Advantage.API
 
             for (var i = 1; i <= nOrders; i++)
             {
-                var randCustomerId = rand.Next(_ctx.Custumers.Count());
+                var randCustomerId = rand.Next(1, _ctx.Customers.Count());
                 var placed = Helpers.GetRandomOrderPlaced();
                 var completed = Helpers.GetRandomOrderCompleted(placed);
+                var customers = _ctx.Customers.ToList();
 
-                orders.Add(new Order{
+                orders.Add(new Order
+                {
                     Id = i,
-                    Customer = _ctx.Custumers.First(c => c.Id == randCustomerId),
+                    Customer = customers.First(c => c.Id == randCustomerId),
                     Total = Helpers.GetRandomOrderTotal(),
                     Placed = placed,
                     Completed = completed
@@ -96,6 +108,57 @@ namespace Advantage.API
             }
 
             return orders;
+        }
+
+        private List<Server> BuildServerList()
+        {
+            return new List<Server>(){
+              new Server{
+                  Id = 1,
+                  Name = "Dev-Web",
+                  IsOnline = true
+              },
+              new Server{
+                  Id = 2,
+                  Name = "Dev-Mail",
+                  IsOnline = false
+              },
+              new Server{
+                  Id = 3,
+                  Name = "Dev-Services",
+                  IsOnline = true
+              },
+              new Server{
+                  Id = 4,
+                  Name = "QA-Web",
+                  IsOnline = true
+              },
+              new Server{
+                  Id = 5,
+                  Name = "QA-Mail",
+                  IsOnline = false
+              },
+              new Server{
+                  Id = 6,
+                  Name = "QA-Services",
+                  IsOnline = true
+              },
+              new Server{
+                  Id = 7,
+                  Name = "Prod-Web",
+                  IsOnline = true
+              },
+              new Server{
+                  Id = 8,
+                  Name = "Prod-Mail",
+                  IsOnline = true
+              },
+              new Server{
+                  Id = 9,
+                  Name = "Prod-Services",
+                  IsOnline = true
+              },
+            };
         }
     }
 }
