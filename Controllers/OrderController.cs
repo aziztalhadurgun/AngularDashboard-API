@@ -31,7 +31,7 @@ namespace Advantage.API.Controllers
             {
                 Page = page,
                 TotalPages = totalPages
-            }
+            };
 
             return Ok(response);
         }
@@ -71,7 +71,7 @@ namespace Advantage.API.Controllers
             return Ok(groupedResult);
         }
 
-        [HttpGet("GetOrder/{}", Name = "GetOrder")]
+        [HttpGet("GetOrder/{id}", Name = "GetOrder")]
         public IActionResult GetOrder(int id)
         {
             var order = _ctx.Orders.Include(c => c.Customer)
